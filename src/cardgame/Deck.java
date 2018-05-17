@@ -56,12 +56,51 @@ public interface Deck
 
     default void sortDeck ()
     {
-        //TO-DO
+        boolean sorted = true;
+
+        do
+        {
+            for (int pos = 1; pos < cards.size(); pos++)
+            {
+                if (cards.get(pos).compareTo(cards.get(pos - 1)) != 1)
+                {
+                    PlayingCard temp = cards.get(pos);
+                    cards.remove(pos); cards.add(pos, cards.get(pos -1));
+                    cards.remove(pos - 1); cards.add(pos - 1, temp);
+                }
+            }
+        }while (!sorted);
     }
 
     default PlayingCard[][] dealCards (int players)
     {
-        //TO-DO
+        PlayingCard[][] returnDeck = new PlayingCard[players][];
+
+        int deckSizeUpper = cards.size() / players;
+        int deckSizeLower = (cards.size() /players) - 1;
+        int countLower = cards.size() % players;
+        int cardsLeft = cards.size();
+
+        for (int pos = players; pos > 0; pos--)
+        {
+            int handSize = pos > countLower ? deckSizeUpper : deckSizeLower;
+            returnDeck[pos] = new PlayingCard[handSize];
+        }
+
+        int posInHand = 0;
+
+        while (cardsLeft > 0)
+        {
+            for (int pos = 0; pos < players; pos++)
+            {
+                returnDeck[pos][posInHand] = cards.get(cardsLeft - 1);
+                cardsLeft--;
+            }
+
+            posInHand++;
+        }
+
+        return returnDeck;
     }
 
     default void printDeck ()
