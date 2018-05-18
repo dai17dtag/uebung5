@@ -1,37 +1,26 @@
 package cardgame;
 
-import Exceptions.InvalidRankException;
-import Exceptions.InvalidSuitException;
+import exceptions.InvalidRankException;
+import exceptions.InvalidSuitException;
 
 public class Enumerate
 {
-    private static final String[] ranks =
-            {
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "Bube",
-                    "Dame",
-                    "Koenig",
-                    "Ass"
-            };
+    String[] ranks;
+    String[] suits;
 
-    private static final String[] suits =
-            {
-                    "Karo",
-                    "Herz",
-                    "Pik",
-                    "Kreuz"
-            };
+    public Enumerate (String[] ranks, String[] suits)
+    {
+        this.ranks = ranks;
+        this.suits = suits;
+    }
 
-    public static int rank (String rank) throws InvalidRankException
+    public int rank (String rank) throws InvalidRankException
     {
         int enumeratedRank = -1;
 
         for (int pos = 0; pos < ranks.length; pos++)
         {
-            if (ranks[pos].contentEquals(rank))
+            if (ranks[pos].matches(rank))
             {
                 enumeratedRank = pos;
             }
@@ -45,13 +34,13 @@ public class Enumerate
         return enumeratedRank;
     }
 
-    public static int suit (String suit) throws InvalidSuitException
+    public int suit (String suit) throws InvalidSuitException
     {
         int enumeratedSuit = -1;
 
-        for (int pos = 0; pos < ranks.length; pos++)
+        for (int pos = 0; pos < suits.length; pos++)
         {
-            if (ranks[pos].contentEquals(suit))
+            if (suits[pos].matches(suit))
             {
                 enumeratedSuit = pos;
             }
